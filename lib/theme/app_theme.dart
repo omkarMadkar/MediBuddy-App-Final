@@ -2,20 +2,28 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 
 class AppTheme {
+  // Modern Color Palette
   static const Color primaryTeal = Color(0xFF20B2AA);
   static const Color primaryBlue = Color(0xFF1E90FF);
   static const Color accentTeal = Color(0xFF00CED1);
   static const Color accentBlue = Color(0xFF4169E1);
-  static const Color backgroundWhite = Color(0xFFFAFAFA);
+  static const Color backgroundWhite = Color(0xFFF8F9FA);
   static const Color cardBackground = Color(0xFFFFFFFF);
   static const Color textPrimary = Color(0xFF2C3E50);
   static const Color textSecondary = Color(0xFF7F8C8D);
   static const Color successGreen = Color(0xFF27AE60);
-  static const Color warningOrange = Color(0xFFF39C12);
+  static const Color warningOrange = Color(0xFFFF6B35);
   static const Color errorRed = Color(0xFFE74C3C);
   static const Color lowRiskGreen = Color(0xFF2ECC71);
   static const Color moderateRiskOrange = Color(0xFFF39C12);
   static const Color highRiskRed = Color(0xFFE74C3C);
+
+  // Additional Modern Colors
+  static const Color lightGray = Color(0xFFF8F9FA);
+  static const Color mediumGray = Color(0xFFE9ECEF);
+  static const Color darkGray = Color(0xFF6C757D);
+  static const Color accentOrange = Color(0xFFFF6B35);
+  static const Color accentPurple = Color(0xFF6F42C1);
 
   static ThemeData get lightTheme {
     return ThemeData(
@@ -40,9 +48,7 @@ class AppTheme {
         color: cardBackground,
         elevation: 8,
         shadowColor: Colors.black.withOpacity(0.1),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -96,16 +102,10 @@ class AppTheme {
       gradient: LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        colors: [
-          Colors.white.withOpacity(0.1),
-          Colors.white.withOpacity(0.05),
-        ],
+        colors: [Colors.white.withOpacity(0.1), Colors.white.withOpacity(0.05)],
       ),
       borderRadius: BorderRadius.circular(16),
-      border: Border.all(
-        color: Colors.white.withOpacity(0.2),
-        width: 1,
-      ),
+      border: Border.all(color: Colors.white.withOpacity(0.2), width: 1),
       boxShadow: [
         BoxShadow(
           color: Colors.black.withOpacity(0.1),
@@ -152,11 +152,7 @@ class AppTheme {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            icon,
-            size: 32,
-            color: color,
-          ),
+          Icon(icon, size: 32, color: color),
           const SizedBox(height: 12),
           Text(
             title,
@@ -181,10 +177,7 @@ class AppTheme {
           ),
           Text(
             unit,
-            style: const TextStyle(
-              fontSize: 12,
-              color: textSecondary,
-            ),
+            style: const TextStyle(fontSize: 12, color: textSecondary),
           ),
         ],
       ),
@@ -223,10 +216,7 @@ class AppTheme {
                 if (deviceName.isNotEmpty)
                   Text(
                     deviceName,
-                    style: const TextStyle(
-                      color: textSecondary,
-                      fontSize: 12,
-                    ),
+                    style: const TextStyle(color: textSecondary, fontSize: 12),
                   ),
               ],
             ),
@@ -253,16 +243,17 @@ class AppTheme {
           elevation: isLoading ? 4 : 8,
           shadowColor: (backgroundColor ?? primaryTeal).withOpacity(0.3),
         ),
-        child: isLoading
-            ? const SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                ),
-              )
-            : Text(text),
+        child:
+            isLoading
+                ? const SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  ),
+                )
+                : Text(text),
       ),
     );
   }
@@ -273,11 +264,7 @@ class AppTheme {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Colors.grey[300]!,
-            Colors.grey[100]!,
-            Colors.grey[300]!,
-          ],
+          colors: [Colors.grey[300]!, Colors.grey[100]!, Colors.grey[300]!],
         ),
       ),
       child: child,

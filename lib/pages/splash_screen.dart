@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../theme/app_theme.dart';
-import 'bluetooth_connection_page.dart';
+import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -11,60 +12,69 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
-  late AnimationController _fadeController;
-  late AnimationController _scaleController;
-  late Animation<double> _fadeAnimation;
-  late Animation<double> _scaleAnimation;
+  late AnimationController _logoController;
+  late AnimationController _textController;
+  late AnimationController _pulseController;
+  late Animation<double> _logoScale;
+  late Animation<double> _logoOpacity;
+  late Animation<double> _textOpacity;
+  late Animation<double> _pulseAnimation;
 
   @override
   void initState() {
     super.initState();
-    
-    _fadeController = AnimationController(
+
+    _logoController = AnimationController(
+      duration: const Duration(milliseconds: 2000),
+      vsync: this,
+    );
+
+    _textController = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
-    
-    _scaleController = AnimationController(
+
+    _pulseController = AnimationController(
       duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
 
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _fadeController,
-      curve: Curves.easeInOut,
-    ));
+    _logoScale = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _logoController, curve: Curves.elasticOut),
+    );
 
-    _scaleAnimation = Tween<double>(
-      begin: 0.5,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _scaleController,
-      curve: Curves.elasticOut,
-    ));
+    _logoOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _logoController, curve: Curves.easeInOut),
+    );
+
+    _textOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _textController, curve: Curves.easeInOut),
+    );
+
+    _pulseAnimation = Tween<double>(begin: 1.0, end: 1.1).animate(
+      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
+    );
 
     _startAnimations();
   }
 
   void _startAnimations() async {
-    await _scaleController.forward();
-    await _fadeController.forward();
-    
-    // Wait for 2 seconds then navigate
-    await Future.delayed(const Duration(seconds: 2));
-    
+    await _logoController.forward();
+    await _textController.forward();
+    _pulseController.repeat(reverse: true);
+
+    // Wait for 3 seconds then navigate
+    await Future.delayed(const Duration(seconds: 3));
+
     if (mounted) {
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const BluetoothConnectionPage(),
+          pageBuilder:
+              (context, animation, secondaryAnimation) => const HomeScreen(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(opacity: animation, child: child);
           },
-          transitionDuration: const Duration(milliseconds: 500),
+          transitionDuration: const Duration(milliseconds: 800),
         ),
       );
     }
@@ -72,8 +82,9 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void dispose() {
-    _fadeController.dispose();
-    _scaleController.dispose();
+    _logoController.dispose();
+    _textController.dispose();
+    _pulseController.dispose();
     super.dispose();
   }
 
@@ -81,79 +92,107 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              AppTheme.backgroundWhite,
-              AppTheme.primaryTeal,
-            ],
-            stops: [0.0, 1.0],
+            colors: [Color(0xFFF8F9FA), Color(0xFFE3F2FD), Color(0xFFB3E5FC)],
+            stops: [0.0, 0.5, 1.0],
           ),
         ),
-        child: Center(
+        child: SafeArea(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // App Logo with Animation
+              const Spacer(),
+
+              // Logo Section
               AnimatedBuilder(
-                animation: _scaleAnimation,
+                animation: _logoController,
                 builder: (context, child) {
                   return Transform.scale(
-                    scale: _scaleAnimation.value,
-                    child: Container(
-                      width: 120,
-                      height: 120,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: LinearGradient(
-                          colors: AppTheme.healthGradient,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppTheme.primaryTeal.withOpacity(0.3),
-                            blurRadius: 20,
-                            offset: const Offset(0, 10),
-                          ),
-                        ],
-                      ),
-                      child: const Icon(
-                        Icons.favorite,
-                        size: 60,
-                        color: Colors.white,
+                    scale: _logoScale.value,
+                    child: Opacity(
+                      opacity: _logoOpacity.value,
+                      child: AnimatedBuilder(
+                        animation: _pulseAnimation,
+                        builder: (context, child) {
+                          return Transform.scale(
+                            scale: _pulseAnimation.value,
+                            child: Container(
+                              width: 140,
+                              height: 140,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: const LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Color(0xFF20B2AA),
+                                    Color(0xFF00CED1),
+                                    Color(0xFF1E90FF),
+                                  ],
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: const Color(
+                                      0xFF20B2AA,
+                                    ).withOpacity(0.3),
+                                    blurRadius: 30,
+                                    offset: const Offset(0, 15),
+                                  ),
+                                ],
+                              ),
+                              child: const Icon(
+                                FontAwesomeIcons.heartPulse,
+                                size: 70,
+                                color: Colors.white,
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   );
                 },
               ),
-              
+
               const SizedBox(height: 40),
-              
-              // App Name with Fade Animation
+
+              // App Name and Tagline
               AnimatedBuilder(
-                animation: _fadeAnimation,
+                animation: _textController,
                 builder: (context, child) {
                   return Opacity(
-                    opacity: _fadeAnimation.value,
+                    opacity: _textOpacity.value,
                     child: Column(
                       children: [
                         const Text(
                           'MediBuddy',
                           style: TextStyle(
-                            fontSize: 36,
-                            fontWeight: FontWeight.bold,
-                            color: AppTheme.textPrimary,
-                            letterSpacing: 2,
+                            fontSize: 42,
+                            fontWeight: FontWeight.w800,
+                            color: Color(0xFF2C3E50),
+                            letterSpacing: 1.5,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          'Your Personal Health Companion',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: const Color(0xFF7F8C8D),
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 0.5,
                           ),
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Your Health Companion',
+                          'Monitor • Predict • Improve',
                           style: TextStyle(
-                            fontSize: 16,
-                            color: AppTheme.textSecondary,
-                            letterSpacing: 1,
+                            fontSize: 14,
+                            color: const Color(0xFF20B2AA),
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 1.0,
                           ),
                         ),
                       ],
@@ -161,33 +200,44 @@ class _SplashScreenState extends State<SplashScreen>
                   );
                 },
               ),
-              
-              const SizedBox(height: 60),
-              
-              // Loading Animation
+
+              const Spacer(),
+
+              // Loading Section
               AnimatedBuilder(
-                animation: _fadeAnimation,
+                animation: _textController,
                 builder: (context, child) {
                   return Opacity(
-                    opacity: _fadeAnimation.value,
+                    opacity: _textOpacity.value,
                     child: Column(
                       children: [
-                        SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 3,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              AppTheme.primaryTeal,
+                        Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white.withOpacity(0.2),
+                          ),
+                          child: const Center(
+                            child: SizedBox(
+                              width: 30,
+                              height: 30,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 3,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Color(0xFF20B2AA),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 20),
                         Text(
-                          'Initializing...',
+                          'Initializing your health journey...',
                           style: TextStyle(
-                            fontSize: 14,
-                            color: AppTheme.textSecondary,
+                            fontSize: 16,
+                            color: const Color(0xFF7F8C8D),
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ],
@@ -195,6 +245,8 @@ class _SplashScreenState extends State<SplashScreen>
                   );
                 },
               ),
+
+              const SizedBox(height: 60),
             ],
           ),
         ),
