@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../theme/app_theme.dart';
 
+// Gemini API key placeholder
+// Put your Google Gemini API key below to enable real responses.
+// Example: const String geminiApiKey = 'AIzaSy...';
+// Note: Keep this key out of source control for security.
+const String geminiApiKey = 'SET_YOUR_GEMINI_API_KEY_HERE';
+
 class AIChatHelper extends StatefulWidget {
   const AIChatHelper({super.key});
 
@@ -59,7 +65,8 @@ class _AIChatHelperState extends State<AIChatHelper> with TickerProviderStateMix
     _messageController.clear();
     _scrollToBottom();
 
-    // Simulate AI response (replace with actual Gemini API call)
+    // Simulated AI response. To use Gemini, replace the line below with
+    // your API call using `geminiApiKey` defined above.
     _simulateAIResponse();
   }
 

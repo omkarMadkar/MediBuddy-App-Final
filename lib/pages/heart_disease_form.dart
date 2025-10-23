@@ -111,42 +111,33 @@ class _HeartDiseaseFormPageState extends State<HeartDiseaseFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [AppTheme.foodiBackground, AppTheme.primaryOrange],
-            stops: [0.0, 0.1],
-          ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              _buildHeader(),
-              _buildProgressIndicator(),
-              Expanded(
-                child: Form(
-                  key: _formKey,
-                  child: PageView(
-                    controller: _pageController,
-                    onPageChanged: (page) {
-                      setState(() {
-                        _currentPage = page;
-                      });
-                    },
-                    children: [
-                      _buildPersonalInfoPage(),
-                      _buildHealthMetricsPage(),
-                      _buildRiskFactorsPage(),
-                      _buildReviewPage(),
-                    ],
-                  ),
+      backgroundColor: AppTheme.foodiBackground,
+      body: SafeArea(
+        child: Column(
+          children: [
+            _buildHeader(),
+            _buildProgressIndicator(),
+            Expanded(
+              child: Form(
+                key: _formKey,
+                child: PageView(
+                  controller: _pageController,
+                  onPageChanged: (page) {
+                    setState(() {
+                      _currentPage = page;
+                    });
+                  },
+                  children: [
+                    _buildPersonalInfoPage(),
+                    _buildHealthMetricsPage(),
+                    _buildRiskFactorsPage(),
+                    _buildReviewPage(),
+                  ],
                 ),
               ),
-              _buildNavigationButtons(),
-            ],
-          ),
+            ),
+            _buildNavigationButtons(),
+          ],
         ),
       ),
     );
@@ -166,8 +157,8 @@ class _HeartDiseaseFormPageState extends State<HeartDiseaseFormPage> {
               'Heart Disease Risk Assessment',
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+                fontSize: 22,
+                fontWeight: FontWeight.w800,
                 color: AppTheme.textPrimary,
               ),
             ),
@@ -187,16 +178,20 @@ class _HeartDiseaseFormPageState extends State<HeartDiseaseFormPage> {
             children: List.generate(_pages.length, (index) {
               return Expanded(
                 child: Container(
-                  height: 4,
+                  height: 6,
                   margin: EdgeInsets.only(
                     right: index < _pages.length - 1 ? 8 : 0,
                   ),
                   decoration: BoxDecoration(
-                    color:
-                        index <= _currentPage
-                            ? AppTheme.primaryOrange
-                            : AppTheme.textSecondary.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(2),
+                    gradient: index <= _currentPage
+                        ? const LinearGradient(
+                            colors: [AppTheme.primaryOrange, AppTheme.accentOrange],
+                          )
+                        : null,
+                    color: index <= _currentPage
+                        ? null
+                        : AppTheme.textSecondary.withOpacity(0.15),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
               );
@@ -476,10 +471,10 @@ class _HeartDiseaseFormPageState extends State<HeartDiseaseFormPage> {
           const SizedBox(height: 16),
           SliderTheme(
             data: SliderTheme.of(context).copyWith(
-              activeTrackColor: AppTheme.primaryOrange,
-              inactiveTrackColor: AppTheme.textSecondary.withOpacity(0.3),
-              thumbColor: AppTheme.primaryOrange,
-              overlayColor: AppTheme.primaryOrange.withOpacity(0.2),
+              activeTrackColor: AppTheme.primaryTeal,
+              inactiveTrackColor: AppTheme.textSecondary.withOpacity(0.2),
+              thumbColor: AppTheme.primaryTeal,
+              overlayColor: AppTheme.primaryTeal.withOpacity(0.15),
             ),
             child: Slider(
               value: value,

@@ -155,16 +155,8 @@ class _BluetoothConnectionPageState extends State<BluetoothConnectionPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [AppTheme.foodiBackground, AppTheme.primaryOrange],
-            stops: [0.0, 0.3],
-          ),
-        ),
-        child: SafeArea(
+      backgroundColor: AppTheme.foodiBackground,
+      body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
@@ -208,7 +200,7 @@ class _BluetoothConnectionPageState extends State<BluetoothConnectionPage>
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           gradient: LinearGradient(
-                            colors: AppTheme.healthGradient,
+                            colors: const [AppTheme.primaryTeal, AppTheme.accentTeal],
                           ),
                           boxShadow: [
                             BoxShadow(
@@ -235,7 +227,7 @@ class _BluetoothConnectionPageState extends State<BluetoothConnectionPage>
                   'Connect Your Health Device',
                   style: TextStyle(
                     fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w800,
                     color: AppTheme.textPrimary,
                   ),
                 ),
@@ -264,7 +256,6 @@ class _BluetoothConnectionPageState extends State<BluetoothConnectionPage>
               ],
             ),
           ),
-        ),
       ),
     );
   }
