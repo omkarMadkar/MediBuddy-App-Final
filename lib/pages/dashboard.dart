@@ -98,7 +98,7 @@ class _DashboardPageState extends State<DashboardPage>
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [AppTheme.homeBackground, AppTheme.primaryTeal],
+            colors: [AppTheme.foodiBackground, AppTheme.primaryOrange],
             stops: [0.0, 0.1],
           ),
         ),
@@ -129,7 +129,7 @@ class _DashboardPageState extends State<DashboardPage>
                           end: Alignment.bottomCenter,
                           colors: [
                             AppTheme.homeBackground,
-                            AppTheme.primaryTeal,
+                            AppTheme.primaryOrange,
                           ],
                           stops: [0.0, 0.1],
                         ),
@@ -310,7 +310,7 @@ class _DashboardPageState extends State<DashboardPage>
                   ),
                   const Icon(
                     Icons.arrow_forward_ios,
-                    color: AppTheme.primaryTeal,
+                    color: AppTheme.primaryOrange,
                     size: 16,
                   ),
                 ],
@@ -319,14 +319,14 @@ class _DashboardPageState extends State<DashboardPage>
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppTheme.primaryTeal.withOpacity(0.1),
+                  color: AppTheme.primaryOrange.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
                   children: [
                     Icon(
                       FontAwesomeIcons.chartLine,
-                      color: AppTheme.primaryTeal,
+                      color: AppTheme.primaryOrange,
                       size: 16,
                     ),
                     const SizedBox(width: 8),
@@ -335,7 +335,7 @@ class _DashboardPageState extends State<DashboardPage>
                         'Get instant risk assessment based on your health data',
                         style: TextStyle(
                           fontSize: 12,
-                          color: AppTheme.primaryTeal,
+                          color: AppTheme.primaryOrange,
                           fontWeight: FontWeight.w500,
                         ),
                       ),

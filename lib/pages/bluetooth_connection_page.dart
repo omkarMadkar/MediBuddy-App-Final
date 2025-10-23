@@ -160,7 +160,7 @@ class _BluetoothConnectionPageState extends State<BluetoothConnectionPage>
           gradient: const LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [AppTheme.homeBackground, AppTheme.primaryTeal],
+            colors: [AppTheme.foodiBackground, AppTheme.primaryOrange],
             stops: [0.0, 0.3],
           ),
         ),
@@ -355,7 +355,9 @@ class _BluetoothConnectionPageState extends State<BluetoothConnectionPage>
             height: 50,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              gradient: LinearGradient(colors: AppTheme.healthGradient),
+                        gradient: const LinearGradient(
+                          colors: [AppTheme.primaryOrange, AppTheme.accentOrange],
+                        ),
             ),
             child: const Icon(
               FontAwesomeIcons.heartPulse,
@@ -383,7 +385,7 @@ class _BluetoothConnectionPageState extends State<BluetoothConnectionPage>
                   )
                   : const Icon(
                     Icons.arrow_forward_ios,
-                    color: AppTheme.primaryTeal,
+                    color: AppTheme.primaryOrange,
                     size: 16,
                   ),
           onTap: _isConnecting ? null : () => _connectToDevice(device),

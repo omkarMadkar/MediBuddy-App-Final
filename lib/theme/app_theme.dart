@@ -2,52 +2,52 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 
 class AppTheme {
-  // Primary Color Palette (Based on Home Page Design)
-  static const Color primaryTeal = Color(0xFF20B2AA);
+  // Primary Color Palette (Foodi App Inspired)
+  static const Color primaryOrange = Color(0xFFFF6B35); // Vibrant orange like foodi
   static const Color primaryBlue = Color(0xFF1E90FF);
-  static const Color accentTeal = Color(0xFF00CED1);
+  static const Color accentOrange = Color(0xFFFF8C42); // Lighter orange
   static const Color accentBlue = Color(0xFF4169E1);
-
-  // Background Colors (Consistent with Home Page)
-  static const Color backgroundWhite = Color(0xFFF8F9FA);
+  
+  // Background Colors (Clean White Theme)
+  static const Color backgroundWhite = Color(0xFFFFFFFF);
+  static const Color backgroundLight = Color(0xFFF8F9FA);
   static const Color cardBackground = Color(0xFFFFFFFF);
-
-  // Text Colors (Consistent with Home Page)
-  static const Color textPrimary = Color(0xFF2C3E50);
-  static const Color textSecondary = Color(0xFF7F8C8D);
-
-  // Health Status Colors (Consistent with Home Page)
+  
+  // Text Colors (Foodi Style)
+  static const Color textPrimary = Color(0xFF2C3E50); // Dark gray
+  static const Color textSecondary = Color(0xFF7F8C8D); // Light gray
+  static const Color textWhite = Color(0xFFFFFFFF);
+  
+  // Health Status Colors
   static const Color successGreen = Color(0xFF27AE60);
   static const Color warningOrange = Color(0xFFFF6B35);
   static const Color errorRed = Color(0xFFE74C3C);
-
+  
   // Risk Assessment Colors
   static const Color lowRiskGreen = Color(0xFF2ECC71);
   static const Color moderateRiskOrange = Color(0xFFF39C12);
   static const Color highRiskRed = Color(0xFFE74C3C);
 
-  // Additional Modern Colors (Consistent with Home Page)
+  // Additional Colors
   static const Color lightGray = Color(0xFFF8F9FA);
   static const Color mediumGray = Color(0xFFE9ECEF);
   static const Color darkGray = Color(0xFF6C757D);
-  static const Color accentOrange = Color(0xFFFF6B35);
   static const Color accentPurple = Color(0xFF6F42C1);
-
-  // Home Page Specific Colors (For Consistency)
-  static const Color homeBackground = Color(0xFFF8F9FA);
-  static const Color homeCardShadow = Color(0x0D000000); // 5% opacity
-  static const Color homePrimaryGradient = Color(0xFF20B2AA);
-  static const Color homeSecondaryGradient = Color(0xFF00CED1);
-  static const Color homeAccentOrange = Color(0xFFFF6B35);
+  
+  // Foodi App Specific Colors
+  static const Color foodiOrange = Color(0xFFFF6B35);
+  static const Color foodiBackground = Color(0xFFFFFFFF);
+  static const Color foodiCardShadow = Color(0x1A000000); // 10% opacity
+  static const Color foodiLightShadow = Color(0x0D000000); // 5% opacity
 
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: primaryTeal,
+        seedColor: primaryOrange,
         brightness: Brightness.light,
       ),
-      scaffoldBackgroundColor: homeBackground,
+      scaffoldBackgroundColor: foodiBackground,
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -62,15 +62,15 @@ class AppTheme {
       cardTheme: CardTheme(
         color: cardBackground,
         elevation: 8,
-        shadowColor: homeCardShadow,
+        shadowColor: foodiCardShadow,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: primaryTeal,
-          foregroundColor: Colors.white,
+          backgroundColor: primaryOrange,
+          foregroundColor: textWhite,
           elevation: 8,
-          shadowColor: primaryTeal.withOpacity(0.3),
+          shadowColor: primaryOrange.withOpacity(0.3),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -299,85 +299,97 @@ class AppTheme {
     highRiskRed,
   ];
 
-  // Home Page Consistent Styling Methods
-  static BoxDecoration get homeCardDecoration => BoxDecoration(
+  // Foodi App Consistent Styling Methods
+  static BoxDecoration get foodiCardDecoration => BoxDecoration(
     color: cardBackground,
     borderRadius: BorderRadius.circular(16),
     boxShadow: [
       BoxShadow(
-        color: homeCardShadow,
+        color: foodiCardShadow,
         blurRadius: 10,
         offset: const Offset(0, 4),
       ),
     ],
   );
 
-  static BoxDecoration get homeButtonDecoration => BoxDecoration(
+  static BoxDecoration get foodiButtonDecoration => BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(12),
     boxShadow: [
       BoxShadow(
-        color: homeCardShadow,
+        color: foodiLightShadow,
         blurRadius: 10,
         offset: const Offset(0, 2),
       ),
     ],
   );
 
-  static BoxDecoration get homeGradientDecoration => BoxDecoration(
+  static BoxDecoration get foodiOrangeDecoration => BoxDecoration(
+    color: primaryOrange,
+    borderRadius: BorderRadius.circular(16),
+    boxShadow: [
+      BoxShadow(
+        color: primaryOrange.withOpacity(0.3),
+        blurRadius: 15,
+        offset: const Offset(0, 8),
+      ),
+    ],
+  );
+
+  static BoxDecoration get foodiGradientDecoration => BoxDecoration(
     gradient: const LinearGradient(
-      colors: [homePrimaryGradient, homeSecondaryGradient],
+      colors: [primaryOrange, accentOrange],
     ),
     borderRadius: BorderRadius.circular(16),
     boxShadow: [
       BoxShadow(
-        color: homePrimaryGradient.withOpacity(0.3),
+        color: primaryOrange.withOpacity(0.3),
         blurRadius: 15,
         offset: const Offset(0, 8),
       ),
     ],
   );
 
-  static BoxDecoration get homeAccentDecoration => BoxDecoration(
-    color: homeAccentOrange,
-    borderRadius: BorderRadius.circular(16),
-    boxShadow: [
-      BoxShadow(
-        color: homeAccentOrange.withOpacity(0.3),
-        blurRadius: 15,
-        offset: const Offset(0, 8),
-      ),
-    ],
+  // Foodi App Text Styles
+  static const TextStyle foodiTitleStyle = TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.w800,
+    color: textPrimary,
   );
 
-  // Consistent Text Styles
-  static const TextStyle homeTitleStyle = TextStyle(
+  static const TextStyle foodiSubtitleStyle = TextStyle(
+    fontSize: 18,
+    color: textSecondary,
+    fontWeight: FontWeight.w500,
+  );
+
+  static const TextStyle foodiCardTitleStyle = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: textPrimary,
+  );
+
+  static const TextStyle foodiCardValueStyle = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w700,
     color: textPrimary,
   );
 
-  static const TextStyle homeSubtitleStyle = TextStyle(
-    fontSize: 16,
-    color: textSecondary,
-    fontWeight: FontWeight.w500,
-  );
-
-  static const TextStyle homeCardTitleStyle = TextStyle(
+  static const TextStyle foodiCardSubtitleStyle = TextStyle(
     fontSize: 14,
-    fontWeight: FontWeight.w600,
-    color: textPrimary,
-  );
-
-  static const TextStyle homeCardValueStyle = TextStyle(
-    fontSize: 18,
-    fontWeight: FontWeight.w700,
-    color: textPrimary,
-  );
-
-  static const TextStyle homeCardSubtitleStyle = TextStyle(
-    fontSize: 12,
     color: textSecondary,
+  );
+
+  static const TextStyle foodiButtonTextStyle = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: textWhite,
+  );
+
+  static const TextStyle foodiOrangeTextStyle = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: primaryOrange,
   );
 
   // Consistent Icon Styles

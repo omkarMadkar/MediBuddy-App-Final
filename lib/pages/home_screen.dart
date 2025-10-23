@@ -5,7 +5,7 @@ import '../services/bluetooth_service.dart';
 import '../models/health_data.dart';
 import 'bluetooth_connection_page.dart';
 import 'heart_disease_form.dart';
-import 'profile_screen.dart';
+import 'ai_chat_helper.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.homeBackground,
+      backgroundColor: AppTheme.foodiBackground,
       body: IndexedStack(
         index: _selectedIndex,
         children: [
@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         Container(
           width: 45,
           height: 45,
-          decoration: AppTheme.homeButtonDecoration,
+          decoration: AppTheme.foodiButtonDecoration,
           child: const Icon(Icons.menu, color: AppTheme.textPrimary, size: 22),
         ),
 
@@ -167,11 +167,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             gradient: const LinearGradient(
-              colors: [AppTheme.primaryTeal, AppTheme.accentTeal],
+              colors: [AppTheme.primaryOrange, AppTheme.accentOrange],
             ),
             boxShadow: [
               BoxShadow(
-                color: AppTheme.primaryTeal.withOpacity(0.3),
+                color: AppTheme.primaryOrange.withOpacity(0.3),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
@@ -187,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Today's Information", style: AppTheme.homeTitleStyle),
+        const Text("Today's Information", style: AppTheme.foodiTitleStyle),
         const SizedBox(height: 8),
         Text(
           _getCurrentDate(),
@@ -217,11 +217,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 margin: const EdgeInsets.symmetric(horizontal: 4),
                 height: 40,
                 decoration: BoxDecoration(
-                  color: isSelected ? AppTheme.homeAccentOrange : Colors.white,
+                  color: isSelected ? AppTheme.primaryOrange : Colors.white,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: AppTheme.homeCardShadow,
+                      color: AppTheme.foodiLightShadow,
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -246,7 +246,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget _buildChallengeCard() {
     return Container(
       padding: const EdgeInsets.all(20),
-      decoration: AppTheme.homeAccentDecoration,
+      decoration: AppTheme.foodiOrangeDecoration,
       child: Row(
         children: [
           Container(
@@ -297,7 +297,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Health Metrics', style: AppTheme.homeTitleStyle),
+        const Text('Health Metrics', style: AppTheme.foodiTitleStyle),
         const SizedBox(height: 16),
         Row(
           children: [
@@ -312,7 +312,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         : '30.34 kcal',
                 total: '400',
                 progress: 0.076,
-                color: AppTheme.homeAccentOrange,
+                color: AppTheme.primaryOrange,
               ),
             ),
             const SizedBox(width: 12),
@@ -374,7 +374,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }) {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: AppTheme.homeCardDecoration,
+      decoration: AppTheme.foodiCardDecoration,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -382,7 +382,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             children: [
               Icon(icon, color: color, size: 20),
               const SizedBox(width: 8),
-              Text(title, style: AppTheme.homeCardTitleStyle),
+              Text(title, style: AppTheme.foodiCardTitleStyle),
             ],
           ),
           const SizedBox(height: 12),
@@ -409,9 +409,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
           ),
           if (total != null)
-            Text('of $total', style: AppTheme.homeCardSubtitleStyle),
+            Text('of $total', style: AppTheme.foodiCardSubtitleStyle),
           if (subtitle != null)
-            Text(subtitle, style: AppTheme.homeCardSubtitleStyle),
+            Text(subtitle, style: AppTheme.foodiCardSubtitleStyle),
         ],
       ),
     );
@@ -428,7 +428,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Quick Actions', style: AppTheme.homeTitleStyle),
+        const Text('Quick Actions', style: AppTheme.foodiTitleStyle),
         const SizedBox(height: 16),
         Row(
           children: [
@@ -456,7 +456,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 icon: FontAwesomeIcons.stethoscope,
                 title: 'Health Check',
                 subtitle: 'Risk Assessment',
-                color: AppTheme.primaryTeal,
+                color: AppTheme.primaryOrange,
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -483,7 +483,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(16),
-        decoration: AppTheme.homeCardDecoration,
+        decoration: AppTheme.foodiCardDecoration,
         child: Column(
           children: [
             Container(
@@ -496,9 +496,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               child: Icon(icon, color: color, size: 24),
             ),
             const SizedBox(height: 12),
-            Text(title, style: AppTheme.homeCardTitleStyle),
+            Text(title, style: AppTheme.foodiCardTitleStyle),
             const SizedBox(height: 4),
-            Text(subtitle, style: AppTheme.homeCardSubtitleStyle),
+            Text(subtitle, style: AppTheme.foodiCardSubtitleStyle),
           ],
         ),
       ),
@@ -514,7 +514,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildProfilePage() {
-    return const ProfileScreen();
+    return const AIChatHelper();
   }
 
   Widget _buildBottomNavigationBar() {
@@ -543,7 +543,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               _buildNavItem(Icons.bluetooth, 'Connect', 1),
               _buildNavItem(Icons.add, '', 2, isCenter: true),
               _buildNavItem(Icons.analytics, 'Predict', 3),
-              _buildNavItem(Icons.person, 'Profile', 4),
+              _buildNavItem(FontAwesomeIcons.robot, 'AI Helper', 4),
             ],
           ),
         ),
@@ -572,12 +572,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 height: 60,
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [AppTheme.primaryTeal, AppTheme.accentTeal],
+                    colors: [AppTheme.primaryOrange, AppTheme.accentTeal],
                   ),
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: AppTheme.primaryTeal.withOpacity(0.3),
+                      color: AppTheme.primaryOrange.withOpacity(0.3),
                       blurRadius: 15,
                       offset: const Offset(0, 8),
                     ),
@@ -602,13 +602,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             decoration: BoxDecoration(
               color:
                   isSelected
-                      ? AppTheme.primaryTeal.withOpacity(0.1)
+                      ? AppTheme.primaryOrange.withOpacity(0.1)
                       : Colors.transparent,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
               icon,
-              color: isSelected ? AppTheme.primaryTeal : AppTheme.textSecondary,
+              color: isSelected ? AppTheme.primaryOrange : AppTheme.textSecondary,
               size: 24,
             ),
           ),
@@ -618,7 +618,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             style: TextStyle(
               fontSize: 12,
               fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-              color: isSelected ? AppTheme.primaryTeal : AppTheme.textSecondary,
+              color: isSelected ? AppTheme.primaryOrange : AppTheme.textSecondary,
             ),
           ),
         ],

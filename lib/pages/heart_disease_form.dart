@@ -20,9 +20,9 @@ class _HeartDiseaseFormPageState extends State<HeartDiseaseFormPage> {
   // Form data
   int _age = 30;
   String _gender = 'Male';
-  int _smoking = 0;
-  int _diabetes = 0;
-  int _chestPain = 0;
+  final int _smoking = 0;
+  final int _diabetes = 0;
+  final int _chestPain = 0;
   int _bloodPressure = 120;
   int _cholesterol = 200;
   int _hdl = 50;
@@ -116,7 +116,7 @@ class _HeartDiseaseFormPageState extends State<HeartDiseaseFormPage> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [AppTheme.backgroundWhite, AppTheme.primaryTeal],
+            colors: [AppTheme.foodiBackground, AppTheme.primaryOrange],
             stops: [0.0, 0.1],
           ),
         ),
@@ -194,7 +194,7 @@ class _HeartDiseaseFormPageState extends State<HeartDiseaseFormPage> {
                   decoration: BoxDecoration(
                     color:
                         index <= _currentPage
-                            ? AppTheme.primaryTeal
+                            ? AppTheme.primaryOrange
                             : AppTheme.textSecondary.withOpacity(0.3),
                     borderRadius: BorderRadius.circular(2),
                   ),
@@ -451,7 +451,7 @@ class _HeartDiseaseFormPageState extends State<HeartDiseaseFormPage> {
         children: [
           Row(
             children: [
-              Icon(icon, color: AppTheme.primaryTeal, size: 20),
+              Icon(icon, color: AppTheme.primaryOrange, size: 20),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
@@ -468,7 +468,7 @@ class _HeartDiseaseFormPageState extends State<HeartDiseaseFormPage> {
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: AppTheme.primaryTeal,
+                  color: AppTheme.primaryOrange,
                 ),
               ),
             ],
@@ -476,10 +476,10 @@ class _HeartDiseaseFormPageState extends State<HeartDiseaseFormPage> {
           const SizedBox(height: 16),
           SliderTheme(
             data: SliderTheme.of(context).copyWith(
-              activeTrackColor: AppTheme.primaryTeal,
+              activeTrackColor: AppTheme.primaryOrange,
               inactiveTrackColor: AppTheme.textSecondary.withOpacity(0.3),
-              thumbColor: AppTheme.primaryTeal,
-              overlayColor: AppTheme.primaryTeal.withOpacity(0.2),
+              thumbColor: AppTheme.primaryOrange,
+              overlayColor: AppTheme.primaryOrange.withOpacity(0.2),
             ),
             child: Slider(
               value: value,
@@ -503,7 +503,7 @@ class _HeartDiseaseFormPageState extends State<HeartDiseaseFormPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: isSelected ? AppTheme.primaryTeal : Colors.transparent,
+              color: isSelected ? AppTheme.primaryOrange : Colors.transparent,
               width: 2,
             ),
           ),
@@ -512,7 +512,9 @@ class _HeartDiseaseFormPageState extends State<HeartDiseaseFormPage> {
               Icon(
                 icon,
                 color:
-                    isSelected ? AppTheme.primaryTeal : AppTheme.textSecondary,
+                    isSelected
+                        ? AppTheme.primaryOrange
+                        : AppTheme.textSecondary,
                 size: 32,
               ),
               const SizedBox(height: 8),
@@ -523,7 +525,7 @@ class _HeartDiseaseFormPageState extends State<HeartDiseaseFormPage> {
                   fontWeight: FontWeight.w600,
                   color:
                       isSelected
-                          ? AppTheme.primaryTeal
+                          ? AppTheme.primaryOrange
                           : AppTheme.textSecondary,
                 ),
               ),
@@ -585,7 +587,7 @@ class _HeartDiseaseFormPageState extends State<HeartDiseaseFormPage> {
               child: OutlinedButton(
                 onPressed: _previousPage,
                 style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: AppTheme.primaryTeal),
+                  side: const BorderSide(color: AppTheme.primaryOrange),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -594,7 +596,7 @@ class _HeartDiseaseFormPageState extends State<HeartDiseaseFormPage> {
                 child: const Text(
                   'Previous',
                   style: TextStyle(
-                    color: AppTheme.primaryTeal,
+                    color: AppTheme.primaryOrange,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

@@ -151,11 +151,10 @@ class _SplashScreenState extends State<SplashScreen>
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              AppTheme.homeBackground,
-              AppTheme.primaryTeal.withOpacity(0.1),
-              AppTheme.accentTeal.withOpacity(0.05),
+              AppTheme.primaryOrange,
+              AppTheme.accentOrange,
             ],
-            stops: const [0.0, 0.6, 1.0],
+            stops: const [0.0, 1.0],
           ),
         ),
         child: SafeArea(
@@ -263,44 +262,23 @@ class _SplashScreenState extends State<SplashScreen>
                     height: 160,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: AppTheme.healthGradient,
-                      ),
+                      color: AppTheme.textWhite,
                       boxShadow: [
                         BoxShadow(
-                          color: AppTheme.primaryTeal.withOpacity(0.3),
+                          color: Colors.black.withOpacity(0.2),
                           blurRadius: 40,
                           offset: const Offset(0, 20),
-                        ),
-                        BoxShadow(
-                          color: AppTheme.accentTeal.withOpacity(0.2),
-                          blurRadius: 60,
-                          offset: const Offset(0, 30),
                         ),
                       ],
                     ),
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        // Outer ring
-                        Container(
-                          width: 140,
-                          height: 140,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Colors.white.withOpacity(0.3),
-                              width: 2,
-                            ),
-                          ),
-                        ),
                         // Inner icon
                         const Icon(
                           FontAwesomeIcons.heartPulse,
                           size: 70,
-                          color: Colors.white,
+                          color: AppTheme.primaryOrange,
                         ),
                       ],
                     ),
@@ -325,18 +303,13 @@ class _SplashScreenState extends State<SplashScreen>
             child: Column(
               children: [
                 // App Name
-                ShaderMask(
-                  shaderCallback: (bounds) => LinearGradient(
-                    colors: AppTheme.healthGradient,
-                  ).createShader(bounds),
-                  child: const Text(
-                    'MediBuddy',
-                    style: TextStyle(
-                      fontSize: 48,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
-                      letterSpacing: 2.0,
-                    ),
+                const Text(
+                  'MediBuddy',
+                  style: TextStyle(
+                    fontSize: 48,
+                    fontWeight: FontWeight.w900,
+                    color: AppTheme.textWhite,
+                    letterSpacing: 2.0,
                   ),
                 ),
                 
@@ -347,7 +320,7 @@ class _SplashScreenState extends State<SplashScreen>
                   'Your Personal Health Companion',
                   style: TextStyle(
                     fontSize: 20,
-                    color: AppTheme.textSecondary,
+                    color: AppTheme.textWhite,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.8,
                   ),
@@ -360,10 +333,10 @@ class _SplashScreenState extends State<SplashScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   decoration: BoxDecoration(
-                    color: AppTheme.primaryTeal.withOpacity(0.1),
+                    color: AppTheme.textWhite.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(25),
                     border: Border.all(
-                      color: AppTheme.primaryTeal.withOpacity(0.2),
+                      color: AppTheme.textWhite.withOpacity(0.3),
                       width: 1,
                     ),
                   ),
@@ -371,7 +344,7 @@ class _SplashScreenState extends State<SplashScreen>
                     'Monitor • Predict • Improve',
                     style: TextStyle(
                       fontSize: 16,
-                      color: AppTheme.primaryTeal,
+                      color: AppTheme.textWhite,
                       fontWeight: FontWeight.w600,
                       letterSpacing: 1.2,
                     ),
@@ -424,7 +397,7 @@ class _SplashScreenState extends State<SplashScreen>
                 'Initializing your health journey...',
                 style: TextStyle(
                   fontSize: 16,
-                  color: AppTheme.textSecondary,
+                  color: AppTheme.textWhite,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -457,7 +430,7 @@ class _SplashScreenState extends State<SplashScreen>
               height: 8,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppTheme.primaryTeal.withOpacity(opacity),
+                color: AppTheme.textWhite.withOpacity(opacity),
               ),
             );
           }),
