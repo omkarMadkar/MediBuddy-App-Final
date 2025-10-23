@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
 import '../services/bluetooth_service.dart';
 import '../models/health_data.dart';
@@ -20,7 +19,7 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage>
     with TickerProviderStateMixin {
   final BluetoothService _bluetoothService = BluetoothService();
-  List<HealthData> _healthHistory = [];
+  final List<HealthData> _healthHistory = [];
   DeviceInfo? _deviceInfo;
   bool _isConnected = false;
   String? _connectedDeviceName;
@@ -34,13 +33,9 @@ class _DashboardPageState extends State<DashboardPage>
       duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
-    _refreshAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _refreshController,
-      curve: Curves.easeInOut,
-    ));
+    _refreshAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _refreshController, curve: Curves.easeInOut),
+    );
 
     _setupBluetoothListeners();
   }
@@ -74,10 +69,7 @@ class _DashboardPageState extends State<DashboardPage>
 
     _bluetoothService.errorStream.listen((error) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(error),
-          backgroundColor: AppTheme.errorRed,
-        ),
+        SnackBar(content: Text(error), backgroundColor: AppTheme.errorRed),
       );
     });
   }
@@ -86,7 +78,7 @@ class _DashboardPageState extends State<DashboardPage>
     _refreshController.forward().then((_) {
       _refreshController.reset();
     });
-    
+
     if (_isConnected) {
       await _bluetoothService.requestStatus();
     }
@@ -106,10 +98,7 @@ class _DashboardPageState extends State<DashboardPage>
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              AppTheme.backgroundWhite,
-              AppTheme.primaryTeal,
-            ],
+            colors: [AppTheme.homeBackground, AppTheme.primaryTeal],
             stops: [0.0, 0.1],
           ),
         ),
@@ -139,7 +128,7 @@ class _DashboardPageState extends State<DashboardPage>
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            AppTheme.backgroundWhite,
+                            AppTheme.homeBackground,
                             AppTheme.primaryTeal,
                           ],
                           stops: [0.0, 0.1],
@@ -187,9 +176,12 @@ class _DashboardPageState extends State<DashboardPage>
                       isConnected: _isConnected,
                       deviceName: _connectedDeviceName ?? 'No Device',
                       batteryLevel: _deviceInfo?.uptime ?? 0,
-                      lastSync: _healthHistory.isNotEmpty 
-                          ? DateTime.fromMillisecondsSinceEpoch(_healthHistory.last.timestamp)
-                          : null,
+                      lastSync:
+                          _healthHistory.isNotEmpty
+                              ? DateTime.fromMillisecondsSinceEpoch(
+                                _healthHistory.last.timestamp,
+                              )
+                              : null,
                     ),
                   ),
                 ),
@@ -203,9 +195,11 @@ class _DashboardPageState extends State<DashboardPage>
                         Expanded(
                           child: HealthCard(
                             title: 'Heart Rate',
-                            value: _healthHistory.isNotEmpty && _healthHistory.last.isValidHeartRate
-                                ? _healthHistory.last.heartRate.toString()
-                                : '--',
+                            value:
+                                _healthHistory.isNotEmpty &&
+                                        _healthHistory.last.isValidHeartRate
+                                    ? _healthHistory.last.heartRate.toString()
+                                    : '--',
                             unit: 'BPM',
                             icon: FontAwesomeIcons.heartPulse,
                             color: AppTheme.errorRed,
@@ -216,9 +210,11 @@ class _DashboardPageState extends State<DashboardPage>
                         Expanded(
                           child: HealthCard(
                             title: 'SpO₂',
-                            value: _healthHistory.isNotEmpty && _healthHistory.last.isValidSpO2
-                                ? _healthHistory.last.spo2.toString()
-                                : '--',
+                            value:
+                                _healthHistory.isNotEmpty &&
+                                        _healthHistory.last.isValidSpO2
+                                    ? _healthHistory.last.spo2.toString()
+                                    : '--',
                             unit: '%',
                             icon: FontAwesomeIcons.droplet,
                             color: AppTheme.primaryBlue,
@@ -235,9 +231,7 @@ class _DashboardPageState extends State<DashboardPage>
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.all(16),
-                      child: HealthLineChart(
-                        healthData: _healthHistory,
-                      ),
+                      child: HealthLineChart(healthData: _healthHistory),
                     ),
                   ),
 
@@ -250,9 +244,7 @@ class _DashboardPageState extends State<DashboardPage>
                 ),
 
                 // Bottom Spacing
-                const SliverToBoxAdapter(
-                  child: SizedBox(height: 20),
-                ),
+                const SliverToBoxAdapter(child: SizedBox(height: 20)),
               ],
             ),
           ),
@@ -284,9 +276,7 @@ class _DashboardPageState extends State<DashboardPage>
                     height: 50,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      gradient: LinearGradient(
-                        colors: AppTheme.healthGradient,
-                      ),
+                      gradient: LinearGradient(colors: AppTheme.healthGradient),
                     ),
                     child: const Icon(
                       FontAwesomeIcons.stethoscope,
@@ -362,15 +352,21 @@ class _DashboardPageState extends State<DashboardPage>
 
   String _getHeartRateTrend() {
     if (_healthHistory.length < 2) return 'stable';
-    
-    final recent = _healthHistory.length > 5 
-        ? _healthHistory.sublist(_healthHistory.length - 5).where((data) => data.isValidHeartRate).toList()
-        : _healthHistory.where((data) => data.isValidHeartRate).toList();
+
+    final recent =
+        _healthHistory.length > 5
+            ? _healthHistory
+                .sublist(_healthHistory.length - 5)
+                .where((data) => data.isValidHeartRate)
+                .toList()
+            : _healthHistory.where((data) => data.isValidHeartRate).toList();
     if (recent.length < 2) return 'stable';
-    
-    final avg = recent.map((data) => data.heartRate).reduce((a, b) => a + b) / recent.length;
+
+    final avg =
+        recent.map((data) => data.heartRate).reduce((a, b) => a + b) /
+        recent.length;
     final latest = recent.last.heartRate;
-    
+
     if (latest > avg + 5) return 'rising';
     if (latest < avg - 5) return 'falling';
     return 'stable';
@@ -378,15 +374,20 @@ class _DashboardPageState extends State<DashboardPage>
 
   String _getSpO2Trend() {
     if (_healthHistory.length < 2) return 'stable';
-    
-    final recent = _healthHistory.length > 5 
-        ? _healthHistory.sublist(_healthHistory.length - 5).where((data) => data.isValidSpO2).toList()
-        : _healthHistory.where((data) => data.isValidSpO2).toList();
+
+    final recent =
+        _healthHistory.length > 5
+            ? _healthHistory
+                .sublist(_healthHistory.length - 5)
+                .where((data) => data.isValidSpO2)
+                .toList()
+            : _healthHistory.where((data) => data.isValidSpO2).toList();
     if (recent.length < 2) return 'stable';
-    
-    final avg = recent.map((data) => data.spo2).reduce((a, b) => a + b) / recent.length;
+
+    final avg =
+        recent.map((data) => data.spo2).reduce((a, b) => a + b) / recent.length;
     final latest = recent.last.spo2;
-    
+
     if (latest > avg + 1) return 'rising';
     if (latest < avg - 1) return 'falling';
     return 'stable';

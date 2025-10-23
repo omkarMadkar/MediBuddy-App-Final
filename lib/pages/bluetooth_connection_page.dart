@@ -160,7 +160,7 @@ class _BluetoothConnectionPageState extends State<BluetoothConnectionPage>
           gradient: const LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [AppTheme.backgroundWhite, AppTheme.primaryTeal],
+            colors: [AppTheme.homeBackground, AppTheme.primaryTeal],
             stops: [0.0, 0.3],
           ),
         ),

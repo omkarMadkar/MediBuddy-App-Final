@@ -10,17 +10,17 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  String _userName = "Hasan";
-  String _userEmail = "hasan@example.com";
-  int _age = 28;
-  String _gender = "Male";
-  double _height = 175.0; // cm
-  double _weight = 70.0; // kg
+  final String _userName = "Hasan";
+  final String _userEmail = "hasan@example.com";
+  final int _age = 28;
+  final String _gender = "Male";
+  final double _height = 175.0; // cm
+  final double _weight = 70.0; // kg
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: AppTheme.homeBackground,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
@@ -64,17 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Container(
             width: 45,
             height: 45,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 10,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
+            decoration: AppTheme.homeButtonDecoration,
             child: const Icon(
               Icons.arrow_back,
               color: Color(0xFF2C3E50),
@@ -85,14 +75,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
         const SizedBox(width: 20),
 
-        const Text(
-          'Profile',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF2C3E50),
-          ),
-        ),
+        const Text('Profile', style: AppTheme.homeTitleStyle),
 
         const Spacer(),
 
@@ -104,10 +87,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             width: 45,
             height: 45,
             decoration: BoxDecoration(
-              color: const Color(0xFF20B2AA).withOpacity(0.1),
+              color: AppTheme.primaryTeal.withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(Icons.edit, color: Color(0xFF20B2AA), size: 22),
+            child: const Icon(
+              Icons.edit,
+              color: AppTheme.primaryTeal,
+              size: 22,
+            ),
           ),
         ),
       ],
@@ -117,17 +104,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildProfileCard() {
     return Container(
       padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
+      decoration: AppTheme.homeCardDecoration,
       child: Column(
         children: [
           // Profile Picture
@@ -137,11 +114,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: const LinearGradient(
-                colors: [Color(0xFF20B2AA), Color(0xFF00CED1)],
+                colors: [AppTheme.primaryTeal, AppTheme.accentTeal],
               ),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF20B2AA).withOpacity(0.3),
+                  color: AppTheme.primaryTeal.withOpacity(0.3),
                   blurRadius: 20,
                   offset: const Offset(0, 10),
                 ),
@@ -158,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w700,
-              color: Color(0xFF2C3E50),
+              color: AppTheme.textPrimary,
             ),
           ),
 
@@ -168,7 +145,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             _userEmail,
             style: const TextStyle(
               fontSize: 16,
-              color: Color(0xFF7F8C8D),
+              color: AppTheme.textSecondary,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -225,25 +202,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8F9FA),
+        color: AppTheme.homeBackground,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         children: [
-          Icon(icon, color: const Color(0xFF20B2AA), size: 20),
+          Icon(icon, color: AppTheme.primaryTeal, size: 20),
           const SizedBox(height: 8),
           Text(
             value,
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF2C3E50),
+              color: AppTheme.textPrimary,
             ),
           ),
           const SizedBox(height: 4),
           Text(
             label,
-            style: const TextStyle(fontSize: 12, color: Color(0xFF7F8C8D)),
+            style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary),
           ),
         ],
       ),
@@ -254,14 +231,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Health Statistics',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF2C3E50),
-          ),
-        ),
+        const Text('Health Statistics', style: AppTheme.homeTitleStyle),
         const SizedBox(height: 16),
         Row(
           children: [
@@ -323,17 +293,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   ) {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
+      decoration: AppTheme.homeCardDecoration,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -341,14 +301,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               Icon(icon, color: color, size: 18),
               const SizedBox(width: 8),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF2C3E50),
-                ),
-              ),
+              Text(title, style: AppTheme.homeCardTitleStyle),
             ],
           ),
           const SizedBox(height: 12),
@@ -360,10 +313,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               color: color,
             ),
           ),
-          Text(
-            unit,
-            style: const TextStyle(fontSize: 12, color: Color(0xFF7F8C8D)),
-          ),
+          Text(unit, style: AppTheme.homeCardSubtitleStyle),
         ],
       ),
     );
@@ -373,14 +323,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Menu',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF2C3E50),
-          ),
-        ),
+        const Text('Menu', style: AppTheme.homeTitleStyle),
         const SizedBox(height: 16),
         _buildMenuItem(
           icon: FontAwesomeIcons.chartBar,
@@ -421,27 +364,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Container(
         margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
+        decoration: AppTheme.homeCardDecoration,
         child: Row(
           children: [
             Container(
               width: 45,
               height: 45,
               decoration: BoxDecoration(
-                color: const Color(0xFF20B2AA).withOpacity(0.1),
+                color: AppTheme.primaryTeal.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(icon, color: const Color(0xFF20B2AA), size: 20),
+              child: Icon(icon, color: AppTheme.primaryTeal, size: 20),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -453,7 +386,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF2C3E50),
+                      color: AppTheme.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -461,7 +394,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     subtitle,
                     style: const TextStyle(
                       fontSize: 14,
-                      color: Color(0xFF7F8C8D),
+                      color: AppTheme.textSecondary,
                     ),
                   ),
                 ],
@@ -469,7 +402,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             const Icon(
               Icons.arrow_forward_ios,
-              color: Color(0xFF7F8C8D),
+              color: AppTheme.textSecondary,
               size: 16,
             ),
           ],
@@ -482,14 +415,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Settings',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF2C3E50),
-          ),
-        ),
+        const Text('Settings', style: AppTheme.homeTitleStyle),
         const SizedBox(height: 16),
         _buildMenuItem(
           icon: FontAwesomeIcons.gear,

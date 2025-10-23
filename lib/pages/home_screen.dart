@@ -17,9 +17,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final BluetoothService _bluetoothService = BluetoothService();
   int _selectedIndex = 0;
-  List<HealthData> _healthHistory = [];
+  final List<HealthData> _healthHistory = [];
   bool _isConnected = false;
-  String _userName = "Hasan"; // Default name, can be fetched from user profile
+  final String _userName =
+      "Hasan"; // Default name, can be fetched from user profile
 
   late AnimationController _pulseController;
   late Animation<double> _pulseAnimation;
@@ -67,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: AppTheme.homeBackground,
       body: IndexedStack(
         index: _selectedIndex,
         children: [
@@ -128,18 +129,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         Container(
           width: 45,
           height: 45,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.05),
-                blurRadius: 10,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: const Icon(Icons.menu, color: Color(0xFF2C3E50), size: 22),
+          decoration: AppTheme.homeButtonDecoration,
+          child: const Icon(Icons.menu, color: AppTheme.textPrimary, size: 22),
         ),
 
         const SizedBox(width: 20),
@@ -154,14 +145,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF2C3E50),
+                  color: AppTheme.textPrimary,
                 ),
               ),
               const Text(
                 'Ready for challenge?',
                 style: TextStyle(
                   fontSize: 14,
-                  color: Color(0xFF7F8C8D),
+                  color: AppTheme.textSecondary,
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -176,11 +167,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             gradient: const LinearGradient(
-              colors: [Color(0xFF20B2AA), Color(0xFF00CED1)],
+              colors: [AppTheme.primaryTeal, AppTheme.accentTeal],
             ),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF20B2AA).withOpacity(0.3),
+                color: AppTheme.primaryTeal.withOpacity(0.3),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
@@ -196,20 +187,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Today's Information",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF2C3E50),
-          ),
-        ),
+        const Text("Today's Information", style: AppTheme.homeTitleStyle),
         const SizedBox(height: 8),
         Text(
           _getCurrentDate(),
           style: const TextStyle(
             fontSize: 16,
-            color: Color(0xFF7F8C8D),
+            color: AppTheme.textSecondary,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -233,11 +217,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 margin: const EdgeInsets.symmetric(horizontal: 4),
                 height: 40,
                 decoration: BoxDecoration(
-                  color: isSelected ? const Color(0xFFFF6B35) : Colors.white,
+                  color: isSelected ? AppTheme.homeAccentOrange : Colors.white,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: AppTheme.homeCardShadow,
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -249,8 +233,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color:
-                          isSelected ? Colors.white : const Color(0xFF7F8C8D),
+                      color: isSelected ? Colors.white : AppTheme.textSecondary,
                     ),
                   ),
                 ),
@@ -263,17 +246,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget _buildChallengeCard() {
     return Container(
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: const Color(0xFFFF6B35),
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFFFF6B35).withOpacity(0.3),
-            blurRadius: 15,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
+      decoration: AppTheme.homeAccentDecoration,
       child: Row(
         children: [
           Container(
@@ -324,14 +297,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Health Metrics',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF2C3E50),
-          ),
-        ),
+        const Text('Health Metrics', style: AppTheme.homeTitleStyle),
         const SizedBox(height: 16),
         Row(
           children: [
@@ -346,7 +312,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         : '30.34 kcal',
                 total: '400',
                 progress: 0.076,
-                color: const Color(0xFFFF6B35),
+                color: AppTheme.homeAccentOrange,
               ),
             ),
             const SizedBox(width: 12),
@@ -360,7 +326,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         ? '${_healthHistory.last.heartRate} bpm'
                         : '109 bpm',
                 subtitle: '15 minutes ago',
-                color: const Color(0xFFE74C3C),
+                color: AppTheme.errorRed,
                 showGraph: true,
               ),
             ),
@@ -376,7 +342,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 value: '1409 steps',
                 total: '8,000',
                 progress: 0.176,
-                color: const Color(0xFF27AE60),
+                color: AppTheme.successGreen,
               ),
             ),
             const SizedBox(width: 12),
@@ -386,7 +352,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 title: 'Weight',
                 value: '56.5 kg',
                 subtitle: 'Regular records',
-                color: const Color(0xFF27AE60),
+                color: AppTheme.successGreen,
                 showGraph: true,
               ),
             ),
@@ -408,17 +374,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }) {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
+      decoration: AppTheme.homeCardDecoration,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -426,19 +382,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             children: [
               Icon(icon, color: color, size: 20),
               const SizedBox(width: 8),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF2C3E50),
-                ),
-              ),
+              Text(title, style: AppTheme.homeCardTitleStyle),
             ],
           ),
           const SizedBox(height: 12),
           if (showGraph)
-            Container(height: 40, child: _buildMiniGraph(color))
+            SizedBox(height: 40, child: _buildMiniGraph(color))
           else if (progress != null)
             Column(
               children: [
@@ -460,15 +409,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
           ),
           if (total != null)
-            Text(
-              'of $total',
-              style: const TextStyle(fontSize: 12, color: Color(0xFF7F8C8D)),
-            ),
+            Text('of $total', style: AppTheme.homeCardSubtitleStyle),
           if (subtitle != null)
-            Text(
-              subtitle,
-              style: const TextStyle(fontSize: 12, color: Color(0xFF7F8C8D)),
-            ),
+            Text(subtitle, style: AppTheme.homeCardSubtitleStyle),
         ],
       ),
     );
@@ -485,14 +428,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Quick Actions',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF2C3E50),
-          ),
-        ),
+        const Text('Quick Actions', style: AppTheme.homeTitleStyle),
         const SizedBox(height: 16),
         Row(
           children: [
@@ -503,8 +439,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 subtitle: _isConnected ? 'Connected' : 'Not Connected',
                 color:
                     _isConnected
-                        ? const Color(0xFF27AE60)
-                        : const Color(0xFF7F8C8D),
+                        ? AppTheme.successGreen
+                        : AppTheme.textSecondary,
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -520,7 +456,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 icon: FontAwesomeIcons.stethoscope,
                 title: 'Health Check',
                 subtitle: 'Risk Assessment',
-                color: const Color(0xFF20B2AA),
+                color: AppTheme.primaryTeal,
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -547,17 +483,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
+        decoration: AppTheme.homeCardDecoration,
         child: Column(
           children: [
             Container(
@@ -570,19 +496,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               child: Icon(icon, color: color, size: 24),
             ),
             const SizedBox(height: 12),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF2C3E50),
-              ),
-            ),
+            Text(title, style: AppTheme.homeCardTitleStyle),
             const SizedBox(height: 4),
-            Text(
-              subtitle,
-              style: const TextStyle(fontSize: 12, color: Color(0xFF7F8C8D)),
-            ),
+            Text(subtitle, style: AppTheme.homeCardSubtitleStyle),
           ],
         ),
       ),
@@ -611,7 +527,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: AppTheme.homeCardShadow,
             blurRadius: 20,
             offset: const Offset(0, -5),
           ),
@@ -656,12 +572,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 height: 60,
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [Color(0xFF20B2AA), Color(0xFF00CED1)],
+                    colors: [AppTheme.primaryTeal, AppTheme.accentTeal],
                   ),
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF20B2AA).withOpacity(0.3),
+                      color: AppTheme.primaryTeal.withOpacity(0.3),
                       blurRadius: 15,
                       offset: const Offset(0, 8),
                     ),
@@ -686,16 +602,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             decoration: BoxDecoration(
               color:
                   isSelected
-                      ? const Color(0xFF20B2AA).withOpacity(0.1)
+                      ? AppTheme.primaryTeal.withOpacity(0.1)
                       : Colors.transparent,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
               icon,
-              color:
-                  isSelected
-                      ? const Color(0xFF20B2AA)
-                      : const Color(0xFF7F8C8D),
+              color: isSelected ? AppTheme.primaryTeal : AppTheme.textSecondary,
               size: 24,
             ),
           ),
@@ -705,10 +618,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             style: TextStyle(
               fontSize: 12,
               fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-              color:
-                  isSelected
-                      ? const Color(0xFF20B2AA)
-                      : const Color(0xFF7F8C8D),
+              color: isSelected ? AppTheme.primaryTeal : AppTheme.textSecondary,
             ),
           ),
         ],

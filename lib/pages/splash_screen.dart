@@ -15,30 +15,47 @@ class _SplashScreenState extends State<SplashScreen>
   late AnimationController _logoController;
   late AnimationController _textController;
   late AnimationController _pulseController;
+  late AnimationController _fadeController;
+  late AnimationController _slideController;
+  
   late Animation<double> _logoScale;
   late Animation<double> _logoOpacity;
   late Animation<double> _textOpacity;
   late Animation<double> _pulseAnimation;
+  late Animation<double> _fadeAnimation;
+  late Animation<Offset> _slideAnimation;
 
   @override
   void initState() {
     super.initState();
 
+    // Initialize animation controllers
     _logoController = AnimationController(
-      duration: const Duration(milliseconds: 2000),
-      vsync: this,
-    );
-
-    _textController = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
 
+    _textController = AnimationController(
+      duration: const Duration(milliseconds: 1200),
+      vsync: this,
+    );
+
     _pulseController = AnimationController(
+      duration: const Duration(milliseconds: 2000),
+      vsync: this,
+    );
+
+    _fadeController = AnimationController(
       duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
 
+    _slideController = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+
+    // Initialize animations
     _logoScale = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _logoController, curve: Curves.elasticOut),
     );
@@ -51,30 +68,65 @@ class _SplashScreenState extends State<SplashScreen>
       CurvedAnimation(parent: _textController, curve: Curves.easeInOut),
     );
 
-    _pulseAnimation = Tween<double>(begin: 1.0, end: 1.1).animate(
+    _pulseAnimation = Tween<double>(begin: 1.0, end: 1.05).animate(
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
+
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _fadeController, curve: Curves.easeInOut),
+    );
+
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.3),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _slideController,
+      curve: Curves.easeOutCubic,
+    ));
 
     _startAnimations();
   }
 
   void _startAnimations() async {
+    // Start logo animation
     await _logoController.forward();
+    
+    // Start text animation
     await _textController.forward();
+    
+    // Start pulse animation
     _pulseController.repeat(reverse: true);
+    
+    // Start fade and slide animations
+    _fadeController.forward();
+    _slideController.forward();
 
-    // Wait for 3 seconds then navigate
-    await Future.delayed(const Duration(seconds: 3));
+    // Wait for 2.5 seconds then navigate
+    await Future.delayed(const Duration(milliseconds: 2500));
 
     if (mounted) {
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
-          pageBuilder:
-              (context, animation, secondaryAnimation) => const HomeScreen(),
+          pageBuilder: (context, animation, secondaryAnimation) => const HomeScreen(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(opacity: animation, child: child);
+            return FadeTransition(
+              opacity: CurvedAnimation(
+                parent: animation,
+                curve: Curves.easeInOut,
+              ),
+              child: SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(0, 0.1),
+                  end: Offset.zero,
+                ).animate(CurvedAnimation(
+                  parent: animation,
+                  curve: Curves.easeOutCubic,
+                )),
+                child: child,
+              ),
+            );
           },
-          transitionDuration: const Duration(milliseconds: 800),
+          transitionDuration: const Duration(milliseconds: 1000),
         ),
       );
     }
@@ -85,6 +137,8 @@ class _SplashScreenState extends State<SplashScreen>
     _logoController.dispose();
     _textController.dispose();
     _pulseController.dispose();
+    _fadeController.dispose();
+    _slideController.dispose();
     super.dispose();
   }
 
@@ -92,165 +146,323 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFFF8F9FA), Color(0xFFE3F2FD), Color(0xFFB3E5FC)],
-            stops: [0.0, 0.5, 1.0],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              AppTheme.homeBackground,
+              AppTheme.primaryTeal.withOpacity(0.1),
+              AppTheme.accentTeal.withOpacity(0.05),
+            ],
+            stops: const [0.0, 0.6, 1.0],
           ),
         ),
         child: SafeArea(
-          child: Column(
+          child: Stack(
             children: [
-              const Spacer(),
-
-              // Logo Section
-              AnimatedBuilder(
-                animation: _logoController,
-                builder: (context, child) {
-                  return Transform.scale(
-                    scale: _logoScale.value,
-                    child: Opacity(
-                      opacity: _logoOpacity.value,
-                      child: AnimatedBuilder(
-                        animation: _pulseAnimation,
-                        builder: (context, child) {
-                          return Transform.scale(
-                            scale: _pulseAnimation.value,
-                            child: Container(
-                              width: 140,
-                              height: 140,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                gradient: const LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    Color(0xFF20B2AA),
-                                    Color(0xFF00CED1),
-                                    Color(0xFF1E90FF),
-                                  ],
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: const Color(
-                                      0xFF20B2AA,
-                                    ).withOpacity(0.3),
-                                    blurRadius: 30,
-                                    offset: const Offset(0, 15),
-                                  ),
-                                ],
-                              ),
-                              child: const Icon(
-                                FontAwesomeIcons.heartPulse,
-                                size: 70,
-                                color: Colors.white,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  );
-                },
+              // Background decorative elements
+              _buildBackgroundElements(),
+              
+              // Main content
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 40),
+                    
+                    // Logo Section
+                    _buildLogoSection(),
+                    
+                    const SizedBox(height: 50),
+                    
+                    // App Name and Tagline
+                    _buildTextSection(),
+                    
+                    const SizedBox(height: 80),
+                    
+                    // Loading Section
+                    _buildLoadingSection(),
+                  ],
+                ),
               ),
-
-              const SizedBox(height: 40),
-
-              // App Name and Tagline
-              AnimatedBuilder(
-                animation: _textController,
-                builder: (context, child) {
-                  return Opacity(
-                    opacity: _textOpacity.value,
-                    child: Column(
-                      children: [
-                        const Text(
-                          'MediBuddy',
-                          style: TextStyle(
-                            fontSize: 42,
-                            fontWeight: FontWeight.w800,
-                            color: Color(0xFF2C3E50),
-                            letterSpacing: 1.5,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          'Your Personal Health Companion',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: const Color(0xFF7F8C8D),
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.5,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Monitor • Predict • Improve',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: const Color(0xFF20B2AA),
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 1.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-
-              const Spacer(),
-
-              // Loading Section
-              AnimatedBuilder(
-                animation: _textController,
-                builder: (context, child) {
-                  return Opacity(
-                    opacity: _textOpacity.value,
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 60,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white.withOpacity(0.2),
-                          ),
-                          child: const Center(
-                            child: SizedBox(
-                              width: 30,
-                              height: 30,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 3,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  Color(0xFF20B2AA),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          'Initializing your health journey...',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: const Color(0xFF7F8C8D),
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-
-              const SizedBox(height: 60),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildBackgroundElements() {
+    return AnimatedBuilder(
+      animation: _fadeAnimation,
+      builder: (context, child) {
+        return Opacity(
+          opacity: _fadeAnimation.value * 0.3,
+          child: Stack(
+            children: [
+              // Floating circles
+              Positioned(
+                top: 100,
+                right: 30,
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppTheme.primaryTeal.withOpacity(0.1),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 200,
+                left: 20,
+                child: Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppTheme.accentTeal.withOpacity(0.1),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 300,
+                left: 50,
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppTheme.homeAccentOrange.withOpacity(0.1),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildLogoSection() {
+    return AnimatedBuilder(
+      animation: _logoController,
+      builder: (context, child) {
+        return Transform.scale(
+          scale: _logoScale.value,
+          child: Opacity(
+            opacity: _logoOpacity.value,
+            child: AnimatedBuilder(
+              animation: _pulseAnimation,
+              builder: (context, child) {
+                return Transform.scale(
+                  scale: _pulseAnimation.value,
+                  child: Container(
+                    width: 160,
+                    height: 160,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: AppTheme.healthGradient,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppTheme.primaryTeal.withOpacity(0.3),
+                          blurRadius: 40,
+                          offset: const Offset(0, 20),
+                        ),
+                        BoxShadow(
+                          color: AppTheme.accentTeal.withOpacity(0.2),
+                          blurRadius: 60,
+                          offset: const Offset(0, 30),
+                        ),
+                      ],
+                    ),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        // Outer ring
+                        Container(
+                          width: 140,
+                          height: 140,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.white.withOpacity(0.3),
+                              width: 2,
+                            ),
+                          ),
+                        ),
+                        // Inner icon
+                        const Icon(
+                          FontAwesomeIcons.heartPulse,
+                          size: 70,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildTextSection() {
+    return AnimatedBuilder(
+      animation: _textController,
+      builder: (context, child) {
+        return Opacity(
+          opacity: _textOpacity.value,
+          child: SlideTransition(
+            position: _slideAnimation,
+            child: Column(
+              children: [
+                // App Name
+                ShaderMask(
+                  shaderCallback: (bounds) => LinearGradient(
+                    colors: AppTheme.healthGradient,
+                  ).createShader(bounds),
+                  child: const Text(
+                    'MediBuddy',
+                    style: TextStyle(
+                      fontSize: 48,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
+                      letterSpacing: 2.0,
+                    ),
+                  ),
+                ),
+                
+                const SizedBox(height: 16),
+                
+                // Tagline
+                Text(
+                  'Your Personal Health Companion',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: AppTheme.textSecondary,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.8,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                
+                const SizedBox(height: 12),
+                
+                // Features
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: AppTheme.primaryTeal.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(25),
+                    border: Border.all(
+                      color: AppTheme.primaryTeal.withOpacity(0.2),
+                      width: 1,
+                    ),
+                  ),
+                  child: Text(
+                    'Monitor • Predict • Improve',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: AppTheme.primaryTeal,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1.2,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildLoadingSection() {
+    return AnimatedBuilder(
+      animation: _fadeController,
+      builder: (context, child) {
+        return Opacity(
+          opacity: _fadeAnimation.value,
+          child: Column(
+            children: [
+              // Custom loading indicator
+              Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white.withOpacity(0.1),
+                  border: Border.all(
+                    color: AppTheme.primaryTeal.withOpacity(0.2),
+                    width: 1,
+                  ),
+                ),
+                child: Center(
+                  child: SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 3,
+                      valueColor: AlwaysStoppedAnimation<Color>(AppTheme.primaryTeal),
+                    ),
+                  ),
+                ),
+              ),
+              
+              const SizedBox(height: 24),
+              
+              // Loading text
+              Text(
+                'Initializing your health journey...',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: AppTheme.textSecondary,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              
+              const SizedBox(height: 8),
+              
+              // Dots animation
+              _buildDotsAnimation(),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildDotsAnimation() {
+    return AnimatedBuilder(
+      animation: _pulseController,
+      builder: (context, child) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(3, (index) {
+            final delay = index * 0.2;
+            final animationValue = (_pulseController.value - delay).clamp(0.0, 1.0);
+            final opacity = (1.0 - (animationValue * 2 - 1).abs()).clamp(0.0, 1.0);
+            
+            return Container(
+              margin: const EdgeInsets.symmetric(horizontal: 4),
+              width: 8,
+              height: 8,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppTheme.primaryTeal.withOpacity(opacity),
+              ),
+            );
+          }),
+        );
+      },
     );
   }
 }

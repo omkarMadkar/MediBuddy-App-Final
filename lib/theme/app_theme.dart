@@ -2,28 +2,43 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 
 class AppTheme {
-  // Modern Color Palette
+  // Primary Color Palette (Based on Home Page Design)
   static const Color primaryTeal = Color(0xFF20B2AA);
   static const Color primaryBlue = Color(0xFF1E90FF);
   static const Color accentTeal = Color(0xFF00CED1);
   static const Color accentBlue = Color(0xFF4169E1);
+
+  // Background Colors (Consistent with Home Page)
   static const Color backgroundWhite = Color(0xFFF8F9FA);
   static const Color cardBackground = Color(0xFFFFFFFF);
+
+  // Text Colors (Consistent with Home Page)
   static const Color textPrimary = Color(0xFF2C3E50);
   static const Color textSecondary = Color(0xFF7F8C8D);
+
+  // Health Status Colors (Consistent with Home Page)
   static const Color successGreen = Color(0xFF27AE60);
   static const Color warningOrange = Color(0xFFFF6B35);
   static const Color errorRed = Color(0xFFE74C3C);
+
+  // Risk Assessment Colors
   static const Color lowRiskGreen = Color(0xFF2ECC71);
   static const Color moderateRiskOrange = Color(0xFFF39C12);
   static const Color highRiskRed = Color(0xFFE74C3C);
 
-  // Additional Modern Colors
+  // Additional Modern Colors (Consistent with Home Page)
   static const Color lightGray = Color(0xFFF8F9FA);
   static const Color mediumGray = Color(0xFFE9ECEF);
   static const Color darkGray = Color(0xFF6C757D);
   static const Color accentOrange = Color(0xFFFF6B35);
   static const Color accentPurple = Color(0xFF6F42C1);
+
+  // Home Page Specific Colors (For Consistency)
+  static const Color homeBackground = Color(0xFFF8F9FA);
+  static const Color homeCardShadow = Color(0x0D000000); // 5% opacity
+  static const Color homePrimaryGradient = Color(0xFF20B2AA);
+  static const Color homeSecondaryGradient = Color(0xFF00CED1);
+  static const Color homeAccentOrange = Color(0xFFFF6B35);
 
   static ThemeData get lightTheme {
     return ThemeData(
@@ -32,7 +47,7 @@ class AppTheme {
         seedColor: primaryTeal,
         brightness: Brightness.light,
       ),
-      scaffoldBackgroundColor: backgroundWhite,
+      scaffoldBackgroundColor: homeBackground,
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -47,7 +62,7 @@ class AppTheme {
       cardTheme: CardTheme(
         color: cardBackground,
         elevation: 8,
-        shadowColor: Colors.black.withOpacity(0.1),
+        shadowColor: homeCardShadow,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -283,4 +298,145 @@ class AppTheme {
     moderateRiskOrange,
     highRiskRed,
   ];
+
+  // Home Page Consistent Styling Methods
+  static BoxDecoration get homeCardDecoration => BoxDecoration(
+    color: cardBackground,
+    borderRadius: BorderRadius.circular(16),
+    boxShadow: [
+      BoxShadow(
+        color: homeCardShadow,
+        blurRadius: 10,
+        offset: const Offset(0, 4),
+      ),
+    ],
+  );
+
+  static BoxDecoration get homeButtonDecoration => BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(12),
+    boxShadow: [
+      BoxShadow(
+        color: homeCardShadow,
+        blurRadius: 10,
+        offset: const Offset(0, 2),
+      ),
+    ],
+  );
+
+  static BoxDecoration get homeGradientDecoration => BoxDecoration(
+    gradient: const LinearGradient(
+      colors: [homePrimaryGradient, homeSecondaryGradient],
+    ),
+    borderRadius: BorderRadius.circular(16),
+    boxShadow: [
+      BoxShadow(
+        color: homePrimaryGradient.withOpacity(0.3),
+        blurRadius: 15,
+        offset: const Offset(0, 8),
+      ),
+    ],
+  );
+
+  static BoxDecoration get homeAccentDecoration => BoxDecoration(
+    color: homeAccentOrange,
+    borderRadius: BorderRadius.circular(16),
+    boxShadow: [
+      BoxShadow(
+        color: homeAccentOrange.withOpacity(0.3),
+        blurRadius: 15,
+        offset: const Offset(0, 8),
+      ),
+    ],
+  );
+
+  // Consistent Text Styles
+  static const TextStyle homeTitleStyle = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+    color: textPrimary,
+  );
+
+  static const TextStyle homeSubtitleStyle = TextStyle(
+    fontSize: 16,
+    color: textSecondary,
+    fontWeight: FontWeight.w500,
+  );
+
+  static const TextStyle homeCardTitleStyle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: textPrimary,
+  );
+
+  static const TextStyle homeCardValueStyle = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    color: textPrimary,
+  );
+
+  static const TextStyle homeCardSubtitleStyle = TextStyle(
+    fontSize: 12,
+    color: textSecondary,
+  );
+
+  // Consistent Icon Styles
+  static Widget createHomeIcon({
+    required IconData icon,
+    required Color color,
+    double size = 24,
+    bool withBackground = true,
+  }) {
+    if (!withBackground) {
+      return Icon(icon, color: color, size: size);
+    }
+
+    return Container(
+      width: 45,
+      height: 45,
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Icon(icon, color: color, size: size),
+    );
+  }
+
+  // Consistent Loading Widget
+  static Widget createLoadingIndicator({Color? color, double size = 20}) {
+    return SizedBox(
+      width: size,
+      height: size,
+      child: CircularProgressIndicator(
+        strokeWidth: 2,
+        valueColor: AlwaysStoppedAnimation<Color>(color ?? primaryTeal),
+      ),
+    );
+  }
+
+  // Consistent Error Widget
+  static Widget createErrorWidget({
+    required String message,
+    VoidCallback? onRetry,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.error_outline, size: 48, color: errorRed.withOpacity(0.7)),
+          const SizedBox(height: 16),
+          Text(
+            message,
+            style: const TextStyle(color: textSecondary, fontSize: 16),
+            textAlign: TextAlign.center,
+          ),
+          if (onRetry != null) ...[
+            const SizedBox(height: 16),
+            ElevatedButton(onPressed: onRetry, child: const Text('Retry')),
+          ],
+        ],
+      ),
+    );
+  }
 }
