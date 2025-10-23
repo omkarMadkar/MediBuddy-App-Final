@@ -7,6 +7,9 @@ class AppTheme {
   static const Color primaryBlue = Color(0xFF1E90FF);
   static const Color accentOrange = Color(0xFFFF8C42); // Lighter orange
   static const Color accentBlue = Color(0xFF4169E1);
+  // Teal Palette (added for references across the app)
+  static const Color primaryTeal = Color(0xFF00BFA5); // Teal A700
+  static const Color accentTeal = Color(0xFF26A69A); // Teal 400
   
   // Background Colors (Clean White Theme)
   static const Color backgroundWhite = Color(0xFFFFFFFF);
@@ -39,6 +42,11 @@ class AppTheme {
   static const Color foodiBackground = Color(0xFFFFFFFF);
   static const Color foodiCardShadow = Color(0x1A000000); // 10% opacity
   static const Color foodiLightShadow = Color(0x0D000000); // 5% opacity
+
+  // Home-specific aliases to keep older references working
+  static const Color homeAccentOrange = accentOrange;
+  static const Color homeCardShadow = foodiCardShadow;
+  static const Color homeBackground = foodiBackground;
 
   static ThemeData get lightTheme {
     return ThemeData(

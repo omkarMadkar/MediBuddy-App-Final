@@ -541,9 +541,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             children: [
               _buildNavItem(Icons.home, 'Home', 0),
               _buildNavItem(Icons.bluetooth, 'Connect', 1),
-              _buildNavItem(Icons.add, '', 2, isCenter: true),
-              _buildNavItem(Icons.analytics, 'Predict', 3),
-              _buildNavItem(FontAwesomeIcons.robot, 'AI Helper', 4),
+              _buildNavItem(Icons.analytics, 'Predict', 2),
+              _buildNavItem(FontAwesomeIcons.robot, 'AI Helper', 3),
             ],
           ),
         ),
@@ -558,38 +557,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     bool isCenter = false,
   }) {
     final isSelected = _selectedIndex == index;
-
-    if (isCenter) {
-      return GestureDetector(
-        onTap: () => setState(() => _selectedIndex = index),
-        child: AnimatedBuilder(
-          animation: _pulseAnimation,
-          builder: (context, child) {
-            return Transform.scale(
-              scale: _pulseAnimation.value,
-              child: Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [AppTheme.primaryOrange, AppTheme.accentTeal],
-                  ),
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppTheme.primaryOrange.withOpacity(0.3),
-                      blurRadius: 15,
-                      offset: const Offset(0, 8),
-                    ),
-                  ],
-                ),
-                child: const Icon(Icons.add, color: Colors.white, size: 28),
-              ),
-            );
-          },
-        ),
-      );
-    }
 
     return GestureDetector(
       onTap: () => setState(() => _selectedIndex = index),
