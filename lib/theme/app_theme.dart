@@ -3,29 +3,28 @@ import 'dart:ui';
 
 class AppTheme {
   // Primary Color Palette (Foodi App Inspired)
-  static const Color primaryOrange = Color(0xFFFF6B35); // Vibrant orange like foodi
+  static const Color primaryOrange = Color(0xFFFF6B35);
   static const Color primaryBlue = Color(0xFF1E90FF);
-  static const Color accentOrange = Color(0xFFFF8C42); // Lighter orange
+  static const Color accentOrange = Color(0xFFFF8C42);
   static const Color accentBlue = Color(0xFF4169E1);
-  // Teal Palette (added for references across the app)
-  static const Color primaryTeal = Color(0xFF00BFA5); // Teal A700
-  static const Color accentTeal = Color(0xFF26A69A); // Teal 400
-  
-  // Background Colors (Clean White Theme)
+  static const Color primaryTeal = Color(0xFF00BFA5);
+  static const Color accentTeal = Color(0xFF26A69A);
+
+  // Background Colors
   static const Color backgroundWhite = Color(0xFFFFFFFF);
   static const Color backgroundLight = Color(0xFFF8F9FA);
   static const Color cardBackground = Color(0xFFFFFFFF);
-  
-  // Text Colors (Foodi Style)
-  static const Color textPrimary = Color(0xFF2C3E50); // Dark gray
-  static const Color textSecondary = Color(0xFF7F8C8D); // Light gray
+
+  // Text Colors
+  static const Color textPrimary = Color(0xFF2C3E50);
+  static const Color textSecondary = Color(0xFF7F8C8D);
   static const Color textWhite = Color(0xFFFFFFFF);
-  
-  // Health Status Colors
+
+  // Status Colors
   static const Color successGreen = Color(0xFF27AE60);
   static const Color warningOrange = Color(0xFFFF6B35);
   static const Color errorRed = Color(0xFFE74C3C);
-  
+
   // Risk Assessment Colors
   static const Color lowRiskGreen = Color(0xFF2ECC71);
   static const Color moderateRiskOrange = Color(0xFFF39C12);
@@ -36,14 +35,14 @@ class AppTheme {
   static const Color mediumGray = Color(0xFFE9ECEF);
   static const Color darkGray = Color(0xFF6C757D);
   static const Color accentPurple = Color(0xFF6F42C1);
-  
-  // Foodi App Specific Colors
+
+  // Foodi App Colors
   static const Color foodiOrange = Color(0xFFFF6B35);
   static const Color foodiBackground = Color(0xFFFFFFFF);
-  static const Color foodiCardShadow = Color(0x1A000000); // 10% opacity
-  static const Color foodiLightShadow = Color(0x0D000000); // 5% opacity
+  static const Color foodiCardShadow = Color(0x1A000000);
+  static const Color foodiLightShadow = Color(0x0D000000);
 
-  // Home-specific aliases to keep older references working
+  // Home Aliases
   static const Color homeAccentOrange = accentOrange;
   static const Color homeCardShadow = foodiCardShadow;
   static const Color homeBackground = foodiBackground;
@@ -67,8 +66,8 @@ class AppTheme {
         ),
         iconTheme: IconThemeData(color: textPrimary),
       ),
-      cardTheme: CardTheme(
-        color: cardBackground,
+      cardTheme: CardThemeData(
+        color: const Color.fromARGB(255, 255, 255, 255),
         elevation: 8,
         shadowColor: foodiCardShadow,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -120,6 +119,7 @@ class AppTheme {
     );
   }
 
+  // Glassmorphism
   static BoxDecoration get glassmorphismDecoration {
     return BoxDecoration(
       gradient: LinearGradient(
@@ -281,19 +281,6 @@ class AppTheme {
     );
   }
 
-  static Widget createShimmerEffect({required Widget child}) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Colors.grey[300]!, Colors.grey[100]!, Colors.grey[300]!],
-        ),
-      ),
-      child: child,
-    );
-  }
-
   static List<Color> get healthGradient => [
     primaryTeal,
     accentTeal,
@@ -307,7 +294,7 @@ class AppTheme {
     highRiskRed,
   ];
 
-  // Foodi App Consistent Styling Methods
+  // Foodi Decorations
   static BoxDecoration get foodiCardDecoration => BoxDecoration(
     color: cardBackground,
     borderRadius: BorderRadius.circular(16),
@@ -345,9 +332,7 @@ class AppTheme {
   );
 
   static BoxDecoration get foodiGradientDecoration => BoxDecoration(
-    gradient: const LinearGradient(
-      colors: [primaryOrange, accentOrange],
-    ),
+    gradient: const LinearGradient(colors: [primaryOrange, accentOrange]),
     borderRadius: BorderRadius.circular(16),
     boxShadow: [
       BoxShadow(
@@ -358,7 +343,7 @@ class AppTheme {
     ],
   );
 
-  // Foodi App Text Styles
+  // Text Styles
   static const TextStyle foodiTitleStyle = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.w800,
@@ -400,7 +385,6 @@ class AppTheme {
     color: primaryOrange,
   );
 
-  // Consistent Icon Styles
   static Widget createHomeIcon({
     required IconData icon,
     required Color color,
@@ -410,7 +394,6 @@ class AppTheme {
     if (!withBackground) {
       return Icon(icon, color: color, size: size);
     }
-
     return Container(
       width: 45,
       height: 45,
@@ -422,7 +405,6 @@ class AppTheme {
     );
   }
 
-  // Consistent Loading Widget
   static Widget createLoadingIndicator({Color? color, double size = 20}) {
     return SizedBox(
       width: size,
@@ -434,7 +416,6 @@ class AppTheme {
     );
   }
 
-  // Consistent Error Widget
   static Widget createErrorWidget({
     required String message,
     VoidCallback? onRetry,
